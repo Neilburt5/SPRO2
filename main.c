@@ -24,8 +24,8 @@ int main (void){
     DDRC = 0xF0; // I/O board PC0...3 as inputs, for buttons
     PORTC = 0x3F; //Enable internal pull at PC0...3 inputs
 
+    talha puto;
     
-
 
 return 0;
 }
