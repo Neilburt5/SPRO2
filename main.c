@@ -24,8 +24,44 @@ int main (void){
     DDRC = 0xF0; // I/O board PC0...3 as inputs, for buttons
     PORTC = 0x3F; //Enable internal pull at PC0...3 inputs
 
-    talha puto;
+
+    // Define color sensor pins
+    #define S0 4
+    #define S1 5
+    #define S2 6
+    #define S3 7
+    #define sensorOut 8
+
+    // Calibration Values
+    // Get these from Calibration Sketch
+    int redMin = 0; // Red minimum value
+    int redMax = 0; // Red maximum value
+    int greenMin = 0; // Green minimum value
+    int greenMax = 0; // Green maximum value
+    int blueMin = 0; // Blue minimum value
+    int blueMax = 0; // Blue maximum value
     
+    // Variables for Color Pulse Width Measurements
+    int redPW = 0;
+    int greenPW = 0;
+    int bluePW = 0;
+
+    // Variables for final Color values
+    int redValue;
+    int greenValue;
+    int blueValue;
+
+    // Function prototypes
+    int getRedPW();
+    int getGreenPW();
+    int getBluePW();    
+
+
+
+
+
+
+
 
 return 0;
 }
