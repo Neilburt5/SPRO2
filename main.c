@@ -91,6 +91,5 @@ int getBluePW();
 return 0;
 }
 
-// HOLAAA, mmahuevaso
-//Pa ti mi cola
+
 
