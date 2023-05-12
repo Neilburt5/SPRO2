@@ -23,7 +23,7 @@ int greenPW = 0;
 int bluePW = 0;
  
 void setup() {
- 
+
   // Set S0 - S3 as outputs
   pinMode(S0, OUTPUT);
   pinMode(S1, OUTPUT);
