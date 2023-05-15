@@ -22,12 +22,12 @@ const int stepPin4 = 8; const int dirPin4 = 9;
 
 //Variables for color sensor
 /*Variable from calibration*/
-int redMin = 0; // Red minimum value
-int redMax = 0; // Red maximum value
-int greenMin = 0; // Green minimum value
-int greenMax = 0; // Green maximum value
-int blueMin = 0; // Blue minimum value
-int blueMax = 0; // Blue maximum value
+int redMin = 19; // Red minimum value
+int redMax = 194; // Red maximum value
+int greenMin = 18; // Green minimum value
+int greenMax = 235; // Green maximum value
+int blueMin = 23; // Blue minimum value
+int blueMax = 187; // Blue maximum value
 /*Variables for Color Pulse Width*/
 int redPW = 0;
 int greenPW = 0;
@@ -105,5 +105,7 @@ motor4.setSpeed(100);motor4.step(-pasos);
 }
 
 int main (void){
+
+
 }
 //Abdullah
