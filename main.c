@@ -1,10 +1,7 @@
 #include <stdio.h>
 #include <avr/io.h>
 #include <util/delay.h>
-
-#include "i2cmaster.h"
-#include "lcd.h"
-#include "lm75.h"
+#include "Stepper.h"
 
 
 // Define color sensor pins
