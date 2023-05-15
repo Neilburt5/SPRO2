@@ -11,6 +11,20 @@
 #define S3 7
 #define sensorOut 8
 
+// Variables for steppedmotor
+const int stepsPerRevolution = 200;
+const int numCilindros = 8;
+const int stepPin1 = 2; const int dirPin1 = 3;
+const int stepPin2 = 4; const int dirPin2 = 5;
+const int stepPin3 = 6; const int dirPin3 = 7;
+const int stepPin4 = 8; const int dirPin4 = 9;
+
+//Inicialize the steppermotors
+Stepper motor1(stepsPerRevolution, stepPin1, dirPin1);
+Stepper motor2(stepsPerRevolution, stepPin2, dirPin2);
+Stepper motor3(stepsPerRevolution, stepPin3, dirPin3);
+Stepper motor4(stepsPerRevolution, stepPin4, dirPin4);
+
 // Calibration Values
 // Get these from Calibration Sketch
 int redMin = 19; // Red minimum value
@@ -67,3 +81,16 @@ int getBluePW();
 return 0;
 }
     }
+
+// Function for moving the motors
+void moverCilindros(int distancia) {
+
+// Calculate the number of steps for the neccesary distance
+int pasos = distancia * 200 / 5;
+
+// Movemos los motores
+motor1.setSpeed(100);motor1.step(pasos);
+motor2.setSpeed(100);motor2.step(-pasos);
+motor3.setSpeed(100);motor3.step(pasos);
+motor4.setSpeed(100);motor4.step(-pasos);
+}

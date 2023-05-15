@@ -4,7 +4,8 @@
 #include <util/delay.h>
 #include "usart.h"
 #include <stdlib.h>
-#include "AccelStepper.h"
+#include "Stepper.h"
+
 #define S0 4
 #define S1 5
 #define S2 6
