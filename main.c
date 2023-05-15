@@ -37,23 +37,6 @@ int getBluePW();
 
 
     int main (void){
-    
-    uart_init(); // Open the communication with the microcontroller
-    io_redirect(); // Redirect input and output to the communication
-
-    //Steps to enable the LCD
-    i2c_init(); //Initialize the i2c communication
-    LCD_init(); //Initialize the LCD
-    lm75_init(); //Initialize the temperature sensor
-
-    //Configuration of the LEDs
-    DDRD = 0xFF; //I/O board: PD4...7 as outputs, for LEDs
-    PORTD = 0X00; //Set output LEDs to off
-
-    //Configuration of the input buttons
-    DDRC = 0xF0; // I/O board PC0...3 as inputs, for buttons
-    PORTC = 0x3F; //Enable internal pull at PC0...3 inputs
-
 
     // Set S0 - S3 as outputs
     pinMode(S0, OUTPUT);
@@ -64,13 +47,9 @@ int getBluePW();
     // Set Sensor output as input
     pinMode(sensorOut, INPUT);
 
-
     // Set Frequency scaling to 20%
     digitalWrite(S0, HIGH);
     digitalWrite(S1, LOW);
-
-    // Setup Serial Monitor
-    printf("Starting color sensor calibration and measurement\n");
 
     // Calibration loop, still left to add Libraries and LCD_code to show it in the monitor
     printf("Calibrating...\n");
