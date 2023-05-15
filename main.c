@@ -1,10 +1,7 @@
 #include <stdio.h>
 #include <avr/io.h>
 #include <util/delay.h>
-
-#include "i2cmaster.h"
-#include "lcd.h"
-#include "lm75.h"
+#include "Stepper.h"
 
 
 // Define color sensor pins
@@ -16,12 +13,12 @@
 
 // Calibration Values
 // Get these from Calibration Sketch
-int redMin = 0; // Red minimum value
-int redMax = 0; // Red maximum value
-int greenMin = 0; // Green minimum value
-int greenMax = 0; // Green maximum value
-int blueMin = 0; // Blue minimum value
-int blueMax = 0; // Blue maximum value
+int redMin = 19; // Red minimum value
+int redMax = 194; // Red maximum value
+int greenMin = 18; // Green minimum value
+int greenMax = 235; // Green maximum value
+int blueMin = 23; // Blue minimum value
+int blueMax = 187; // Blue maximum value
 
 // Variables for Color Pulse Width Measurements
 int redPW = 0;
@@ -90,3 +87,4 @@ int getBluePW();
 
 return 0;
 }
+
