@@ -26,6 +26,7 @@ int greenMin = 18; // Green minimum value
 int greenMax = 235; // Green maximum value
 int blueMin = 23; // Blue minimum value
 int blueMax = 187; // Blue maximum value
+
 /*Variables for Color Pulse Width*/
 int redPW = 0;
 int greenPW = 0;
