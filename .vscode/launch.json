@@ -12,8 +12,8 @@
             "type": "platformio-debug",
             "request": "launch",
             "name": "PIO Debug",
-            "executable": "C:/Users/hdhud/Desktop/SPRO2/.pio/build/nanoatmega328new/firmware.elf",
-            "projectEnvName": "nanoatmega328new",
+            "executable": "C:/Users/hdhud/Desktop/SPRO2/.pio/build/uno/firmware.elf",
+            "projectEnvName": "uno",
             "toolchainBinDir": "C:/Users/hdhud/.platformio/packages/toolchain-atmelavr/bin",
             "internalConsoleOptions": "openOnSessionStart",
             "preLaunchTask": {
@@ -25,8 +25,8 @@
             "type": "platformio-debug",
             "request": "launch",
             "name": "PIO Debug (skip Pre-Debug)",
-            "executable": "C:/Users/hdhud/Desktop/SPRO2/.pio/build/nanoatmega328new/firmware.elf",
-            "projectEnvName": "nanoatmega328new",
+            "executable": "C:/Users/hdhud/Desktop/SPRO2/.pio/build/uno/firmware.elf",
+            "projectEnvName": "uno",
             "toolchainBinDir": "C:/Users/hdhud/.platformio/packages/toolchain-atmelavr/bin",
             "internalConsoleOptions": "openOnSessionStart"
         },
@@ -34,8 +34,8 @@
             "type": "platformio-debug",
             "request": "launch",
             "name": "PIO Debug (without uploading)",
-            "executable": "C:/Users/hdhud/Desktop/SPRO2/.pio/build/nanoatmega328new/firmware.elf",
-            "projectEnvName": "nanoatmega328new",
+            "executable": "C:/Users/hdhud/Desktop/SPRO2/.pio/build/uno/firmware.elf",
+            "projectEnvName": "uno",
             "toolchainBinDir": "C:/Users/hdhud/.platformio/packages/toolchain-atmelavr/bin",
             "internalConsoleOptions": "openOnSessionStart",
             "loadMode": "manual"

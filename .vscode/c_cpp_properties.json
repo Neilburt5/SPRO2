@@ -23,7 +23,7 @@
             "defines": [
                 "F_CPU=16000000L",
                 "PLATFORMIO=60107",
-                "ARDUINO_AVR_NANO",
+                "ARDUINO_AVR_UNO",
                 "__AVR_ATmega328P__",
                 ""
             ],
