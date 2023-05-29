@@ -1,126 +1,161 @@
-#include <stdio.h>
-//#include <wiringPi.h>
+#include <avr/io.h>
+#include <util/delay.h>
 
-// Define color sensor pins
-#define S0 4
-#define S1 5
-#define S2 6
-#define S3 7
-#define sensorOut 8 
+// Motor 1
+#define motor1StepPin PD2
+#define motor1DirPin PD3
+//#define motor1EnPin 8
 
-// Calibration Values
-// Get these from Calibration Sketch
-int redMin = 19; // Red minimum value
-int redMax = 194; // Red maximum value
-int greenMin = 18; // Green minimum value
-int greenMax = 235; // Green maximum value
-int blueMin = 23; // Blue minimum value
-int blueMax = 187; // Blue maximum value
+// Motor 2
+#define motor2StepPin PD4
+#define motor2DirPin PD5
+//#define motor2EnPin 9
 
-// Variables for Color Pulse Width Measurements
-int redPW = 0;
-int greenPW = 0;
-int bluePW = 0;
+// Motor 3
+#define motor3StepPin PD6
+#define motor3DirPin PD7
+//#define motor3EnPin 10
 
-// Variables for final Color values
-int redValue;
-int greenValue;
-int blueValue;
+// Color thresholds
+const int redMin = 19;
+const int redMax = 194;
+const int greenMin = 18;
+const int greenMax = 235;
+const int blueMin = 23;
+const int blueMax = 187;
 
-void setup() {
-  // Set up WiringPi
-  wiringPiSetup();
-
-  // Set S0 - S3 as outputs
-  pinMode(S0, OUTPUT);
-  pinMode(S1, OUTPUT);
-  pinMode(S2, OUTPUT);
-  pinMode(S3, OUTPUT);
-
-  // Set Sensor output as input
-  pinMode(sensorOut, INPUT);
-
-  // Set Frequency scaling to 20%
-  digitalWrite(S0, HIGH);
-  digitalWrite(S1, LOW);
-
-  // Setup Serial Monitor
-  printf("Red = %d - Green = %d - Blue = %d\n", redValue, greenValue, blueValue);
+// Function to check if a color is within the specified range
+int isColorInRange(int value, int minRange, int maxRange) {
+  return (value >= minRange && value <= maxRange) ? 1 : 0;
 }
 
-int getRedPW() {
-  // Set sensor to read Red only
-  digitalWrite(S2, LOW);
-  digitalWrite(S3, LOW);
+// Function to configure TCS3200 color sensor
+void configureColorSensor() {
+  // Configure sensor pins as input
+  DDRC &= ~(1 << PC0); // S0
+  DDRC &= ~(1 << PC1); // S1
+  DDRC &= ~(1 << PC2); // OUT
 
-  // Define integer to represent Pulse Width
-  int PW;
-
-  // Read the output Pulse Width
-  PW = pulseIn(sensorOut, LOW);
-
-  // Return the value
-  return PW;
+  // Set S0 and S1 to select scaling factor 1:1
+  PORTC &= ~(1 << PC0); // S0 LOW
+  PORTC &= ~(1 << PC1); // S1 LOW
 }
 
-int getGreenPW() {
-  // Set sensor to read Green only
-  digitalWrite(S2, HIGH);
-  digitalWrite(S3, HIGH);
+// Function to read analog values from the ADC
+int analogRead(int channel) {
+  // Configure ADC
+  ADMUX = (1 << REFS0) | (channel & 0x0F); // Set reference voltage to AVCC and select ADC channel
+  ADCSRA = (1 << ADEN) | (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0); // Enable ADC and set ADC prescaler to 128
 
-  // Define integer to represent Pulse Width
-  int PW;
+  // Start conversion
+  ADCSRA |= (1 << ADSC);
 
-  // Read the output Pulse Width
-  PW = pulseIn(sensorOut, LOW);
+  // Wait for conversion to complete
+  while (ADCSRA & (1 << ADSC));
 
-  // Return the value
-  return PW;
+  // Return converted value
+  return ADC;
 }
 
-int getBluePW() {
-  // Set sensor to read Blue only
-  digitalWrite(S2, LOW);
-  digitalWrite(S3, HIGH);
+// Function to read color values from TCS3200 color sensor
+void readColorSensor(int* red, int* green, int* blue) {
+  // Set S2 and S3 to select red filter
+  PORTC &= ~(1 << PC2); // OUT LOW
+  PORTC &= ~(1 << PC1); // S1 LOW
+  PORTC |= (1 << PC0);  // S0 HIGH
 
-  // Define integer to represent Pulse Width
-  int PW;
+  // Wait for the sensor to stabilize
+  _delay_ms(10);
 
-  // Read the output Pulse Width
-  PW = pulseIn(sensorOut, LOW);
+  // Read red value
+  *red = analogRead(PC2);
 
-  // Return the value
-  return PW;
+  // Set S2 and S3 to select green filter
+  PORTC &= ~(1 << PC2); // OUT LOW
+  PORTC |= (1 << PC1);  // S1 HIGH
+  PORTC &= ~(1 << PC0); // S0 LOW
+
+  // Wait for the sensor to stabilize
+  _delay_ms(10);
+
+  // Read green value
+  *green = analogRead(PC2);
+
+  // Set S2 and S3 to select blue filter
+  PORTC |= (1 << PC2);  // OUT HIGH
+  PORTC &= ~(1 << PC1); // S1 LOW
+  PORTC |= (1 << PC0);  // S0 HIGH
+
+  // Wait for the sensor to stabilize
+  _delay_ms(10);
+
+  // Read blue value
+  *blue = analogRead(PC2);
 }
 
-int main() {
-  // Call the setup function
-  setup();
+int main(void) {
+  // Motor 1
+  DDRD |= (1 << motor1DirPin) | (1 << motor1StepPin); // Set motor1DirPin and motor1StepPin as output
+  DDRB |= (1 << PB0); // Set motor1EnPin as output
+  PORTB &= ~(1 << PB0); // Set motor1EnPin LOW to enable the driver
+
+  // Motor 2
+  DDRD |= (1 << motor2DirPin) | (1 << motor2StepPin); // Set motor2DirPin and motor2StepPin as output
+  DDRB |= (1 << PB1); // Set motor2EnPin as output
+  PORTB &= ~(1 << PB1); // Set motor2EnPin LOW to enable the driver
+
+  // Motor 3
+  DDRD |= (1 << motor3DirPin) | (1 << motor3StepPin); // Set motor3DirPin and motor3StepPin as output
+  DDRB |= (1 << PB2); // Set motor3EnPin as output
+  PORTB &= ~(1 << PB2); // Set motor3EnPin LOW to enable the driver
+
+  // Color sensor variables
+  int redValue, greenValue, blueValue;
+
+  // Configure color sensor
+  configureColorSensor();
 
   while (1) {
-    // Read Red value
-    redPW = getRedPW();
-    // Map to value from 0-255
-    redValue = map(redPW, redMin, redMax, 255, 0);
-    // Delay to stabilize sensor
-    delay(200);
+    // Read color sensor values and store them in variables: redValue, greenValue, blueValue
+    readColorSensor(&redValue, &greenValue, &blueValue);
 
-    // Read Green value
-    greenPW = getGreenPW();
-    // Map to value from 0-255
-    greenValue = map(greenPW, greenMin, greenMax, 255, 0);
-    // Delay to stabilize sensor
-    delay(200);
+    // Determine direction based on color
+    int clockwise = 0;
+    if (isColorInRange(redValue, redMin, redMax) &&
+        isColorInRange(greenValue, greenMin, greenMax) &&
+        isColorInRange(blueValue, blueMin, blueMax)) {
+      clockwise = 1; // Move clockwise if color is within the specified ranges
+    }
 
-    // Read Blue value
-    bluePW = getBluePW();
-    // Map to value from 0-255
-    blueValue = map(bluePW, blueMin, blueMax, 255, 0);
-    // Delay to stabilize sensor
-    delay(200);
+    // Move Motor 1
+    PORTD |= (1 << motor1DirPin); // Set motor1DirPin HIGH to move in a particular direction
+    for (int x = 0; x < 800; x++) {
+      PORTD |= (1 << motor1StepPin); // Set motor1StepPin HIGH
+      _delay_us(100);
+      PORTD &= ~(1 << motor1StepPin); // Set motor1StepPin LOW
+      _delay_us(100);
+    }
+    _delay_ms(100); // One second delay
 
-    // Print output to Serial Monitor
-    printf("Red = %d - Green = %d - Blue = %d\n", redValue, greenValue, blueValue);
+    // Move Motor 2
+    PORTD |= (1 << motor2DirPin); // Set motor2DirPin HIGH to move in a particular direction
+    for (int x = 0; x < 800; x++) {
+      PORTD |= (1 << motor2StepPin); // Set motor2StepPin HIGH
+      _delay_us(100);
+      PORTD &= ~(1 << motor2StepPin); // Set motor2StepPin LOW
+      _delay_us(100);
+    }
+    _delay_ms(100); // One second delay
+
+    // Move Motor 3
+    PORTD |= (1 << motor3DirPin); // Set motor3DirPin HIGH to move in a particular direction
+    for (int x = 0; x < 800; x++) {
+      PORTD |= (1 << motor3StepPin); // Set motor3StepPin HIGH
+      _delay_us(100);
+      PORTD &= ~(1 << motor3StepPin); // Set motor3StepPin LOW
+      _delay_us(100);
+    }
+    _delay_ms(100); // One second delay
   }
 
   return 0;
