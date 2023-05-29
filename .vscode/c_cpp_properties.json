@@ -8,15 +8,15 @@
         {
             "name": "PlatformIO",
             "includePath": [
-                "C:/Users/neil1/OneDrive/Documentos/GitHub/SPRO2/include",
-                "C:/Users/neil1/OneDrive/Documentos/GitHub/SPRO2/src",
+                "C:/Users/hdhud/Desktop/SPRO2/include",
+                "C:/Users/hdhud/Desktop/SPRO2/src",
                 ""
             ],
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
                 "path": [
-                    "C:/Users/neil1/OneDrive/Documentos/GitHub/SPRO2/include",
-                    "C:/Users/neil1/OneDrive/Documentos/GitHub/SPRO2/src",
+                    "C:/Users/hdhud/Desktop/SPRO2/include",
+                    "C:/Users/hdhud/Desktop/SPRO2/src",
                     ""
                 ]
             },
@@ -29,7 +29,7 @@
             ],
             "cStandard": "c11",
             "cppStandard": "c++11",
-            "compilerPath": "C:/Users/neil1/.platformio/packages/toolchain-atmelavr/bin/avr-gcc.exe",
+            "compilerPath": "C:/Users/hdhud/.platformio/packages/toolchain-atmelavr/bin/avr-gcc.exe",
             "compilerArgs": [
                 "-mmcu=atmega328p",
                 ""
