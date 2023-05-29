@@ -2,19 +2,19 @@
 #include <util/delay.h>
 
 // Motor 1
-#define motor1StepPin PD2
-#define motor1DirPin PD3
-//#define motor1EnPin 8
+#define motor1StepPin 0
+#define motor1DirPin 2
+#define motor1EnPin 8
 
 // Motor 2
-#define motor2StepPin PD4
-#define motor2DirPin PD5
-//#define motor2EnPin 9
+#define motor2StepPin 1
+#define motor2DirPin 3
+#define motor2EnPin 9
 
 // Motor 3
-#define motor3StepPin PD6
-#define motor3DirPin PD7
-//#define motor3EnPin 10
+#define motor3StepPin 4
+#define motor3DirPin 5
+#define motor3EnPin 10
 
 // Color thresholds
 const int redMin = 19;
