@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <wiringPi.h>
+//#include <wiringPi.h>
 
 // Define color sensor pins
 #define S0 4
