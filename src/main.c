@@ -1,33 +1,127 @@
-#include <avr/io.h>
-#include <util/delay.h>
+#include <stdio.h>
+#include <wiringPi.h>
 
-#define stepPin 5
-#define dirPin 2
-#define enPin 8
+// Define color sensor pins
+#define S0 4
+#define S1 5
+#define S2 6
+#define S3 7
+#define sensorOut 8 
 
-int main(void)
-{
-    DDRD |= (1 << DDD2) | (1 << DDD5); // Set dirPin and stepPin as output
-    DDRB |= (1 << DDB0); // Set enPin as output
-    PORTB &= ~(1 << PORTB0); // Set enPin LOW to enable the driver
+// Calibration Values
+// Get these from Calibration Sketch
+int redMin = 19; // Red minimum value
+int redMax = 194; // Red maximum value
+int greenMin = 18; // Green minimum value
+int greenMax = 235; // Green maximum value
+int blueMin = 23; // Blue minimum value
+int blueMax = 187; // Blue maximum value
 
-    while (1) {
-        PORTD |= (1 << PORTD2); // Set dirPin HIGH to move in a particular direction
-        for (int x = 0; x < 800; x++) {
-            PORTD |= (1 << PORTD5); // Set stepPin HIGH
-            _delay_us(100);
-            PORTD &= ~(1 << PORTD5); // Set stepPin LOW
-            _delay_us(100);
-        }
-        _delay_ms(100); // One second delay
-        PORTD &= ~(1 << PORTD2); // Set dirPin LOW to change direction of rotation
-        for (int x = 0; x < 800; x++) {
-            PORTD |= (1 << PORTD5); // Set stepPin HIGH
-            _delay_us(100);
-            PORTD &= ~(1 << PORTD5); // Set stepPin LOW
-            _delay_us(100);
-        }
-        _delay_ms(100);
-    }
-    return 0;
+// Variables for Color Pulse Width Measurements
+int redPW = 0;
+int greenPW = 0;
+int bluePW = 0;
+
+// Variables for final Color values
+int redValue;
+int greenValue;
+int blueValue;
+
+void setup() {
+  // Set up WiringPi
+  wiringPiSetup();
+
+  // Set S0 - S3 as outputs
+  pinMode(S0, OUTPUT);
+  pinMode(S1, OUTPUT);
+  pinMode(S2, OUTPUT);
+  pinMode(S3, OUTPUT);
+
+  // Set Sensor output as input
+  pinMode(sensorOut, INPUT);
+
+  // Set Frequency scaling to 20%
+  digitalWrite(S0, HIGH);
+  digitalWrite(S1, LOW);
+
+  // Setup Serial Monitor
+  printf("Red = %d - Green = %d - Blue = %d\n", redValue, greenValue, blueValue);
+}
+
+int getRedPW() {
+  // Set sensor to read Red only
+  digitalWrite(S2, LOW);
+  digitalWrite(S3, LOW);
+
+  // Define integer to represent Pulse Width
+  int PW;
+
+  // Read the output Pulse Width
+  PW = pulseIn(sensorOut, LOW);
+
+  // Return the value
+  return PW;
+}
+
+int getGreenPW() {
+  // Set sensor to read Green only
+  digitalWrite(S2, HIGH);
+  digitalWrite(S3, HIGH);
+
+  // Define integer to represent Pulse Width
+  int PW;
+
+  // Read the output Pulse Width
+  PW = pulseIn(sensorOut, LOW);
+
+  // Return the value
+  return PW;
+}
+
+int getBluePW() {
+  // Set sensor to read Blue only
+  digitalWrite(S2, LOW);
+  digitalWrite(S3, HIGH);
+
+  // Define integer to represent Pulse Width
+  int PW;
+
+  // Read the output Pulse Width
+  PW = pulseIn(sensorOut, LOW);
+
+  // Return the value
+  return PW;
+}
+
+int main() {
+  // Call the setup function
+  setup();
+
+  while (1) {
+    // Read Red value
+    redPW = getRedPW();
+    // Map to value from 0-255
+    redValue = map(redPW, redMin, redMax, 255, 0);
+    // Delay to stabilize sensor
+    delay(200);
+
+    // Read Green value
+    greenPW = getGreenPW();
+    // Map to value from 0-255
+    greenValue = map(greenPW, greenMin, greenMax, 255, 0);
+    // Delay to stabilize sensor
+    delay(200);
+
+    // Read Blue value
+    bluePW = getBluePW();
+    // Map to value from 0-255
+    blueValue = map(bluePW, blueMin, blueMax, 255, 0);
+    // Delay to stabilize sensor
+    delay(200);
+
+    // Print output to Serial Monitor
+    printf("Red = %d - Green = %d - Blue = %d\n", redValue, greenValue, blueValue);
+  }
+
+  return 0;
 }
