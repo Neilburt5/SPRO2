@@ -8,15 +8,15 @@
         {
             "name": "PlatformIO",
             "includePath": [
-                "C:/Users/hdhud/Desktop/SPRO2/include",
-                "C:/Users/hdhud/Desktop/SPRO2/src",
+                "C:/Users/hdhud/Desktop/SEMESTRE 2/SPRO2/include",
+                "C:/Users/hdhud/Desktop/SEMESTRE 2/SPRO2/src",
                 ""
             ],
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
                 "path": [
-                    "C:/Users/hdhud/Desktop/SPRO2/include",
-                    "C:/Users/hdhud/Desktop/SPRO2/src",
+                    "C:/Users/hdhud/Desktop/SEMESTRE 2/SPRO2/include",
+                    "C:/Users/hdhud/Desktop/SEMESTRE 2/SPRO2/src",
                     ""
                 ]
             },
