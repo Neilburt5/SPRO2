@@ -1,6 +1,12 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
+#define S0 24
+#define S1 25
+#define S2 27
+#define S3 26
+#define sensorout 28
+
 // Motor 1
 #define motor1StepPin 0
 #define motor1DirPin 2
