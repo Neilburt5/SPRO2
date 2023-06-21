@@ -1,6 +1,6 @@
 #include <avr/io.h>
 #include <util/delay.h>
-
+//Color sensor pin
 #define S0 24
 #define S1 25
 #define S2 27
@@ -8,18 +8,18 @@
 #define sensorout 28
 
 // Motor 1
-#define motor1StepPin 0
-#define motor1DirPin 2
+#define motor1StepPin 2
+#define motor1DirPin 5
 #define motor1EnPin 8
 
 // Motor 2
-#define motor2StepPin 1
-#define motor2DirPin 3
+#define motor2StepPin 3
+#define motor2DirPin 6
 #define motor2EnPin 9
 
 // Motor 3
 #define motor3StepPin 4
-#define motor3DirPin 5
+#define motor3DirPin 7
 #define motor3EnPin 10
 
 // Color thresholds
@@ -126,42 +126,103 @@ int main(void) {
     readColorSensor(&redValue, &greenValue, &blueValue);
 
     // Determine direction based on color
-    int clockwise = 0;
-    if (isColorInRange(redValue, redMin, redMax) &&
-        isColorInRange(greenValue, greenMin, greenMax) &&
-        isColorInRange(blueValue, blueMin, blueMax)) {
-      clockwise = 1; // Move clockwise if color is within the specified ranges
-    }
+      if(redValue > 200 && greenValue < 100 && blueValue < 100){  //The color is sensing the RED COLOR
+         // Move Motor 1
+              PORTD |= (1 << motor1DirPin); // Set motor1DirPin HIGH to move in a particular direction
+              for (int x = 0; x < 800; x++) {
+              PORTD |= (1 << motor1StepPin); // Set motor1StepPin HIGH
+              _delay_us(100);
+              PORTD &= ~(1 << motor1StepPin); // Set motor1StepPin LOW
+              _delay_us(100);
+              }
+              _delay_ms(100); // One second delay
 
-    // Move Motor 1
-    PORTD |= (1 << motor1DirPin); // Set motor1DirPin HIGH to move in a particular direction
-    for (int x = 0; x < 800; x++) {
-      PORTD |= (1 << motor1StepPin); // Set motor1StepPin HIGH
-      _delay_us(100);
-      PORTD &= ~(1 << motor1StepPin); // Set motor1StepPin LOW
-      _delay_us(100);
-    }
-    _delay_ms(100); // One second delay
+         // Move Motor 2
+              PORTD |= (1 << motor2DirPin); // Set motor2DirPin HIGH to move in a particular direction
+              for (int x = 0; x < 800; x++) {
+              PORTD |= (1 << motor2StepPin); // Set motor2StepPin HIGH
+              _delay_us(100);
+              PORTD &= ~(1 << motor2StepPin); // Set motor2StepPin LOW
+              _delay_us(100);
+              }
+              _delay_ms(100); // One second delay
 
-    // Move Motor 2
-    PORTD |= (1 << motor2DirPin); // Set motor2DirPin HIGH to move in a particular direction
-    for (int x = 0; x < 800; x++) {
-      PORTD |= (1 << motor2StepPin); // Set motor2StepPin HIGH
-      _delay_us(100);
-      PORTD &= ~(1 << motor2StepPin); // Set motor2StepPin LOW
-      _delay_us(100);
-    }
-    _delay_ms(100); // One second delay
+        // Move Motor 3
+              PORTD |= (1 << motor3DirPin); // Set motor3DirPin HIGH to move in a particular direction
+              for (int x = 0; x < 800; x++) {
+              PORTD |= (1 << motor3StepPin); // Set motor3StepPin HIGH
+              _delay_us(100);
+              PORTD &= ~(1 << motor3StepPin); // Set motor3StepPin LOW
+              _delay_us(100);
+              }
+              _delay_ms(100); // One second delay
 
-    // Move Motor 3
-    PORTD |= (1 << motor3DirPin); // Set motor3DirPin HIGH to move in a particular direction
-    for (int x = 0; x < 800; x++) {
-      PORTD |= (1 << motor3StepPin); // Set motor3StepPin HIGH
-      _delay_us(100);
-      PORTD &= ~(1 << motor3StepPin); // Set motor3StepPin LOW
-      _delay_us(100);
-    }
-    _delay_ms(100); // One second delay
+      }
+      if(redValue < 100 && greenValue > 200 && blueValue < 100){  //The color is sensing the GREEN COLOR
+         // Move Motor 1
+              PORTD |= (1 << motor1DirPin); // Set motor1DirPin HIGH to move in a particular direction
+              for (int x = 0; x < 800; x++) {
+              PORTD |= (1 << motor1StepPin); // Set motor1StepPin HIGH
+              _delay_us(100);
+              PORTD &= ~(1 << motor1StepPin); // Set motor1StepPin LOW
+              _delay_us(100);
+              }
+              _delay_ms(100); // One second delay
+
+         // Move Motor 2
+              PORTD |= (1 << motor2DirPin); // Set motor2DirPin HIGH to move in a particular direction
+              for (int x = 0; x < 800; x++) {
+              PORTD |= (1 << motor2StepPin); // Set motor2StepPin HIGH
+              _delay_us(100);
+              PORTD &= ~(1 << motor2StepPin); // Set motor2StepPin LOW
+              _delay_us(100);
+              }
+              _delay_ms(100); // One second delay
+
+        // Move Motor 3
+              PORTD |= (1 << motor3DirPin); // Set motor3DirPin HIGH to move in a particular direction
+              for (int x = 0; x < 800; x++) {
+              PORTD |= (1 << motor3StepPin); // Set motor3StepPin HIGH
+              _delay_us(100);
+              PORTD &= ~(1 << motor3StepPin); // Set motor3StepPin LOW
+              _delay_us(100);
+              }
+              _delay_ms(100); // One second delay
+
+      }
+      if(redValue < 100 && greenValue < 100 && blueValue > 200){  //The color is sensing the BLUE COLOR
+         // Move Motor 1
+              PORTD |= (1 << motor1DirPin); // Set motor1DirPin HIGH to move in a particular direction
+              for (int x = 0; x < 800; x++) {
+              PORTD |= (1 << motor1StepPin); // Set motor1StepPin HIGH
+              _delay_us(100);
+              PORTD &= ~(1 << motor1StepPin); // Set motor1StepPin LOW
+              _delay_us(100);
+              }
+              _delay_ms(100); // One second delay
+
+         // Move Motor 2
+              PORTD |= (1 << motor2DirPin); // Set motor2DirPin HIGH to move in a particular direction
+              for (int x = 0; x < 800; x++) {
+              PORTD |= (1 << motor2StepPin); // Set motor2StepPin HIGH
+              _delay_us(100);
+              PORTD &= ~(1 << motor2StepPin); // Set motor2StepPin LOW
+              _delay_us(100);
+              }
+              _delay_ms(100); // One second delay
+
+        // Move Motor 3
+              PORTD |= (1 << motor3DirPin); // Set motor3DirPin HIGH to move in a particular direction
+              for (int x = 0; x < 800; x++) {
+              PORTD |= (1 << motor3StepPin); // Set motor3StepPin HIGH
+              _delay_us(100);
+              PORTD &= ~(1 << motor3StepPin); // Set motor3StepPin LOW
+              _delay_us(100);
+              }
+              _delay_ms(100); // One second delay
+
+      }
+    
   }
 
   return 0;
