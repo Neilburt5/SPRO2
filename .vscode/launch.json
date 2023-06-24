@@ -12,9 +12,15 @@
             "type": "platformio-debug",
             "request": "launch",
             "name": "PIO Debug",
+<<<<<<< Updated upstream
             "executable": "C:/Users/neil1/OneDrive/Documentos/GitHub/SPRO2/.pio/build/megaatmega2560/firmware.elf",
             "projectEnvName": "megaatmega2560",
             "toolchainBinDir": "C:/Users/neil1/.platformio/packages/toolchain-atmelavr/bin",
+=======
+            "executable": "C:/Users/hdhud/Desktop/SEMESTRE 2/SPRO2/.pio/build/megaatmega2560/firmware.elf",
+            "projectEnvName": "megaatmega2560",
+            "toolchainBinDir": "C:/Users/hdhud/.platformio/packages/toolchain-atmelavr/bin",
+>>>>>>> Stashed changes
             "internalConsoleOptions": "openOnSessionStart",
             "preLaunchTask": {
                 "type": "PlatformIO",
@@ -25,18 +31,30 @@
             "type": "platformio-debug",
             "request": "launch",
             "name": "PIO Debug (skip Pre-Debug)",
+<<<<<<< Updated upstream
             "executable": "C:/Users/neil1/OneDrive/Documentos/GitHub/SPRO2/.pio/build/megaatmega2560/firmware.elf",
             "projectEnvName": "megaatmega2560",
             "toolchainBinDir": "C:/Users/neil1/.platformio/packages/toolchain-atmelavr/bin",
+=======
+            "executable": "C:/Users/hdhud/Desktop/SEMESTRE 2/SPRO2/.pio/build/megaatmega2560/firmware.elf",
+            "projectEnvName": "megaatmega2560",
+            "toolchainBinDir": "C:/Users/hdhud/.platformio/packages/toolchain-atmelavr/bin",
+>>>>>>> Stashed changes
             "internalConsoleOptions": "openOnSessionStart"
         },
         {
             "type": "platformio-debug",
             "request": "launch",
             "name": "PIO Debug (without uploading)",
+<<<<<<< Updated upstream
             "executable": "C:/Users/neil1/OneDrive/Documentos/GitHub/SPRO2/.pio/build/megaatmega2560/firmware.elf",
             "projectEnvName": "megaatmega2560",
             "toolchainBinDir": "C:/Users/neil1/.platformio/packages/toolchain-atmelavr/bin",
+=======
+            "executable": "C:/Users/hdhud/Desktop/SEMESTRE 2/SPRO2/.pio/build/megaatmega2560/firmware.elf",
+            "projectEnvName": "megaatmega2560",
+            "toolchainBinDir": "C:/Users/hdhud/.platformio/packages/toolchain-atmelavr/bin",
+>>>>>>> Stashed changes
             "internalConsoleOptions": "openOnSessionStart",
             "loadMode": "manual"
         }
